@@ -1,0 +1,5 @@
+<odoo>
+    <menuitem id="fixit_root_menu"
+              name="Fixit"
+              sequence="300"/>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+    <record id="fixit_repairman_list_view" model="ir.ui.view">
+        <field name="name">res.users.fixit.repairman.list</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="fixit_repairman_action" model="ir.actions.act_window">
+        <field name="name">Repairman</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="fixit_repairman_action_menu"
+              name="Repairman"
+              parent="fixit_root_menu"
+              action="fixit_repairman_action"
+              sequence="10"/>
+</odoo>

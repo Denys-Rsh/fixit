@@ -1,0 +1,23 @@
+<odoo>
+    <record id="fixit_part_list_view" model="ir.ui.view">
+        <field name="name">fixit.part.list</field>
+        <field name="model">fixit.part</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="fixit_part_action" model="ir.actions.act_window">
+        <field name="name">Part</field>
+        <field name="res_model">fixit.part</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="fixit_part_action_menu"
+              name="Parts"
+              parent="fixit_root_menu"
+              action="fixit_part_action"
+              sequence="10"/>
+</odoo>

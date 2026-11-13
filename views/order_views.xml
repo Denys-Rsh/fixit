@@ -1,0 +1,28 @@
+<odoo>
+    <record id="fixit_order_list_view" model="ir.ui.view">
+        <field name="name">fixit.order.list</field>
+        <field name="model">fixit.order</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="fixit_order_action" model="ir.actions.act_window">
+        <field name="name">Order</field>
+        <field name="res_model">fixit.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="fixit_order_main_menu"
+              name="Orders"
+              parent="fixit_root_menu"
+              sequence="10"/>
+
+    <menuitem id="fixit_order_action_menu"
+              name="Orders"
+              parent="fixit_order_main_menu"
+              action="fixit_order_action"
+              sequence="10"/>
+</odoo>
