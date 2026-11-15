@@ -21,6 +21,7 @@
         "views/client_views.xml",
         "views/repairman_views.xml",
         "views/part_views.xml",
+        "wizard/mass_reassign_repairman_wizard_view.xml",
     ],
 
     "demo": []

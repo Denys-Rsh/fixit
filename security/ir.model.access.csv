@@ -2,4 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access__fixit_order,access__fixit_order,model_fixit_order,base.group_user,1,1,1,1
 access__fixit_order_line,access__fixit_order_line,model_fixit_order_line,base.group_user,1,1,1,1
 access__fixit_part,access__fixit_part,model_fixit_part,base.group_user,1,1,1,1
-
+access__fixit_mass_reassign_repairman_wizard,access__fixit_mass_reassign_repairman_wizard,model_fixit_mass_reassign_repairman_wizard,base.group_user,1,1,1,1

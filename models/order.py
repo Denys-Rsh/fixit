@@ -16,3 +16,4 @@ class Order(models.Model):
         ('cancelled', 'Cancelled')
     ])
     line_ids = fields.One2many(comodel_name='fixit.order.line',inverse_name='order_id')
+    repairman_id = fields.Many2one(comodel_name='res.users', string='Repairman')
