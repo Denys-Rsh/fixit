@@ -9,7 +9,7 @@
         </field>
     </record>
 
-    <record id="estate_property_view_form" model="ir.ui.view">
+    <record id="fixit_order_line_form_view" model="ir.ui.view">
         <field name="name">fixit.order.line.form</field>
         <field name="model">fixit.order.line</field>
         <field name="arch" type="xml">
