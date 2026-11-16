@@ -16,7 +16,7 @@
             <form>
                 <sheet>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="Назва"/></h1>
+                        <h1><field name="name" placeholder="Name"/></h1>
                     </div>
                     <field name="price"/>
                 </sheet>

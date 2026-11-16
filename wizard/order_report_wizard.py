@@ -32,7 +32,7 @@ class OrderReportWizard(models.TransientModel):
     def action_show_report(self):
         """Print the PDF report for the orders matching the wizard fields."""
         if self.date_from and self.date_to and self.date_from > self.date_to:
-            raise UserError('The period start cannot be later than the period end.')
+            raise UserError(self.env._('The period start cannot be later than the period end.'))
 
         domain = []
         if self.order_ids:
@@ -47,5 +47,5 @@ class OrderReportWizard(models.TransientModel):
 
         orders = self.env['fixit.order'].search(domain)
         if not orders:
-            raise UserError('No orders found for these filters.')
+            raise UserError(self.env._('No orders found for these filters.'))
         return self.env.ref('fixit.fixit_order_report').report_action(orders)
