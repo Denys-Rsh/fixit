@@ -10,11 +10,12 @@ class TestFixit(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Internal user (base.group_user) has access through ir.model.access.csv
-        cls.user = new_test_user(cls.env, login='fixit_user', groups='base.group_user')
-        # Portal user is not in base.group_user, so has no access
+        # Fixit Admin has full access through ir.model.access.csv
+        cls.user = new_test_user(cls.env, login='fixit_admin', groups='fixit.group_fixit_admin')
+        # Portal user is not in Fixit groups, so has no access
         cls.portal = new_test_user(cls.env, login='fixit_portal', groups='base.group_portal')
-        cls.repairman = new_test_user(cls.env, login='fixit_repairman', groups='base.group_user')
+        # Fixit User sees only orders assigned to him (ir.rule)
+        cls.repairman = new_test_user(cls.env, login='fixit_repairman', groups='fixit.group_fixit_user')
 
     # ---------- fixit.order ----------
 
@@ -49,6 +50,24 @@ class TestFixit(TransactionCase):
         with self.assertRaises(AccessError) as error:
             self.env['fixit.part'].with_user(self.portal).search([])
         self.assertIn('(fixit.part)', str(error.exception))
+
+    # ---------- ir.rule ----------
+
+    def test_user_sees_less_orders_than_admin(self):
+        self.env['fixit.order'].create([
+            {'name': 'Mine', 'repairman_id': self.repairman.id, 'line_ids': [(0, 0, {'name': 'Line 1'})]},
+            {'name': 'Not mine', 'repairman_id': self.user.id, 'line_ids': [(0, 0, {'name': 'Line 2'})]},
+        ])
+        Order = self.env['fixit.order']
+        Line = self.env['fixit.order.line']
+
+        user_orders = Order.with_user(self.repairman).search_count([])
+        admin_orders = Order.with_user(self.user).search_count([])
+        self.assertLess(user_orders, admin_orders)
+
+        user_lines = Line.with_user(self.repairman).search_count([])
+        admin_lines = Line.with_user(self.user).search_count([])
+        self.assertLess(user_lines, admin_lines)
 
     # ---------- fixit.mass.reassign.repairman.wizard ----------
 

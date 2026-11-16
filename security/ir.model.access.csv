@@ -1,6 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access__fixit_order,access__fixit_order,model_fixit_order,base.group_user,1,1,1,1
-access__fixit_order_line,access__fixit_order_line,model_fixit_order_line,base.group_user,1,1,1,1
-access__fixit_part,access__fixit_part,model_fixit_part,base.group_user,1,1,1,1
-access__fixit_mass_reassign_repairman_wizard,access__fixit_mass_reassign_repairman_wizard,model_fixit_mass_reassign_repairman_wizard,base.group_user,1,1,1,1
-access__fixit_order_report_wizard,access__fixit_order_report_wizard,model_fixit_order_report_wizard,base.group_user,1,1,1,1
+access_fixit_order_user,fixit.order user,model_fixit_order,group_fixit_user,1,1,1,0
+access_fixit_order_admin,fixit.order admin,model_fixit_order,group_fixit_admin,1,1,1,1
+access_fixit_order_line_user,fixit.order.line user,model_fixit_order_line,group_fixit_user,1,1,1,0
+access_fixit_order_line_admin,fixit.order.line admin,model_fixit_order_line,group_fixit_admin,1,1,1,1
+access_fixit_part_user,fixit.part user,model_fixit_part,group_fixit_user,1,0,0,0
+access_fixit_part_admin,fixit.part admin,model_fixit_part,group_fixit_admin,1,1,1,1
+access_fixit_mass_reassign_repairman_wizard_admin,fixit.mass.reassign.repairman.wizard admin,model_fixit_mass_reassign_repairman_wizard,group_fixit_admin,1,1,1,1
+access_fixit_order_report_wizard_user,fixit.order.report.wizard user,model_fixit_order_report_wizard,group_fixit_user,1,1,1,1
+access_fixit_order_report_wizard_admin,fixit.order.report.wizard admin,model_fixit_order_report_wizard,group_fixit_admin,1,1,1,1

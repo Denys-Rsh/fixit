@@ -14,6 +14,7 @@
     "depends": ["base", "web"],
 
     "data": [
+        "security/fixit_security.xml",
         "security/ir.model.access.csv",
         "views/menu.xml",
         "views/order_views.xml",

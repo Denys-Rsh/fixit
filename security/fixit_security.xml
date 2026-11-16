@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Section "Fixit" in Settings → Users -->
+    <record id="module_category_fixit" model="ir.module.category">
+        <field name="name">Fixit</field>
+    </record>
+
+    <!-- In Odoo 19 groups are linked to the category through a privilege -->
+    <record id="res_groups_privilege_fixit" model="res.groups.privilege">
+        <field name="name">Fixit</field>
+        <field name="category_id" ref="module_category_fixit"/>
+    </record>
+
+    <record id="group_fixit_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="res_groups_privilege_fixit"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_fixit_admin" model="res.groups">
+        <field name="name">Admin</field>
+        <field name="privilege_id" ref="res_groups_privilege_fixit"/>
+        <field name="implied_ids" eval="[(4, ref('group_fixit_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- User sees only orders assigned to him -->
+    <record id="rule_fixit_order_user" model="ir.rule">
+        <field name="name">Fixit order: own orders</field>
+        <field name="model_id" ref="model_fixit_order"/>
+        <field name="domain_force">[('repairman_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_fixit_user'))]"/>
+    </record>
+
+    <!-- User sees only lines of orders assigned to him -->
+    <record id="rule_fixit_order_line_user" model="ir.rule">
+        <field name="name">Fixit order line: lines of own orders</field>
+        <field name="model_id" ref="model_fixit_order_line"/>
+        <field name="domain_force">[('order_id.repairman_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_fixit_user'))]"/>
+    </record>
+
+    <!-- Admin sees all orders -->
+    <record id="rule_fixit_order_admin" model="ir.rule">
+        <field name="name">Fixit order: all orders</field>
+        <field name="model_id" ref="model_fixit_order"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_fixit_admin'))]"/>
+    </record>
+
+    <!-- Admin sees all order lines -->
+    <record id="rule_fixit_order_line_admin" model="ir.rule">
+        <field name="name">Fixit order line: all lines</field>
+        <field name="model_id" ref="model_fixit_order_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_fixit_admin'))]"/>
+    </record>
+
+</odoo>

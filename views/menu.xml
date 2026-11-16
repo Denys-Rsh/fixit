@@ -1,5 +1,6 @@
 <odoo>
     <menuitem id="fixit_root_menu"
               name="Fixit"
-              sequence="300"/>
+              sequence="300"
+              groups="group_fixit_user"/>
 </odoo>

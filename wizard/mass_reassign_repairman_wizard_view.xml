@@ -23,5 +23,6 @@
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_fixit_order" />
         <field name="binding_view_types">list</field>
+        <field name="group_ids" eval="[(4, ref('group_fixit_admin'))]"/>
     </record>
 </odoo>
