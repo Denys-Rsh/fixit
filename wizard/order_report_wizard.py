@@ -5,6 +5,8 @@ from odoo.exceptions import UserError
 
 
 class OrderReportWizard(models.TransientModel):
+    """Choose orders, repairmen and a period, then print the orders report."""
+
     _name = 'fixit.order.report.wizard'
     _description = 'Orders report wizard'
 

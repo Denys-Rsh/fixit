@@ -6,9 +6,11 @@ from odoo.tests import TransactionCase, new_test_user, tagged
 
 @tagged('post_install', '-at_install')
 class TestFixit(TransactionCase):
+    """Access rights, record rules and wizards of the Fixit module."""
 
     @classmethod
     def setUpClass(cls):
+        """Create an admin, a repairman and a portal user."""
         super().setUpClass()
         # Fixit Admin has full access through ir.model.access.csv
         cls.user = new_test_user(cls.env, login='fixit_admin', groups='fixit.group_fixit_admin')
@@ -20,6 +22,7 @@ class TestFixit(TransactionCase):
     # ---------- fixit.order ----------
 
     def test_order_access(self):
+        """Admin can create orders, portal user cannot."""
         order = self.env['fixit.order'].with_user(self.user).create({'name': 'Phone'})
         self.assertEqual(order.create_uid, self.user)
 
@@ -30,6 +33,7 @@ class TestFixit(TransactionCase):
     # ---------- fixit.order.line ----------
 
     def test_order_line_access(self):
+        """Portal user cannot read order lines."""
         order = self.env['fixit.order'].with_user(self.user).create({
             'name': 'Laptop',
             'line_ids': [(0, 0, {'name': 'Change screen'})],
@@ -43,6 +47,7 @@ class TestFixit(TransactionCase):
     # ---------- fixit.part ----------
 
     def test_part_access(self):
+        """Admin can create and edit parts, portal user cannot search them."""
         part = self.env['fixit.part'].with_user(self.user).create({'name': 'Battery', 'price': 500})
         part.write({'price': 450})
         self.assertEqual(part.price, 450)
@@ -54,6 +59,7 @@ class TestFixit(TransactionCase):
     # ---------- ir.rule ----------
 
     def test_user_sees_less_orders_than_admin(self):
+        """Record rules hide other repairmen orders and lines from a user."""
         self.env['fixit.order'].create([
             {'name': 'Mine', 'repairman_id': self.repairman.id, 'line_ids': [(0, 0, {'name': 'Line 1'})]},
             {'name': 'Not mine', 'repairman_id': self.user.id, 'line_ids': [(0, 0, {'name': 'Line 2'})]},
@@ -72,6 +78,7 @@ class TestFixit(TransactionCase):
     # ---------- fixit.mass.reassign.repairman.wizard ----------
 
     def test_mass_reassign_repairman(self):
+        """Wizard changes the repairman only on the selected orders."""
         orders = self.env['fixit.order'].create([{'name': 'Order 1'}, {'name': 'Order 2'}])
         other_order = self.env['fixit.order'].create({'name': 'Order 3'})
 
@@ -90,6 +97,7 @@ class TestFixit(TransactionCase):
     # ---------- fixit.order.report.wizard ----------
 
     def test_report_wizard_wrong_period(self):
+        """Period start after period end raises an error."""
         wizard = self.env['fixit.order.report.wizard'].create({
             'date_from': date(2026, 2, 1),
             'date_to': date(2026, 1, 1),
@@ -99,6 +107,7 @@ class TestFixit(TransactionCase):
         self.assertEqual(str(error.exception), 'The period start cannot be later than the period end.')
 
     def test_report_wizard_no_orders(self):
+        """Empty search result raises an error."""
         wizard = self.env['fixit.order.report.wizard'].create({
             'date_from': date(2000, 1, 1),
             'date_to': date(2000, 1, 31),
@@ -108,6 +117,7 @@ class TestFixit(TransactionCase):
         self.assertEqual(str(error.exception), 'No orders found for these filters.')
 
     def test_report_wizard_filters_by_repairman(self):
+        """Report contains only orders of the selected repairman."""
         order = self.env['fixit.order'].create({'name': 'Mine', 'repairman_id': self.repairman.id})
         self.env['fixit.order'].create({'name': 'Not mine', 'repairman_id': self.user.id})
 

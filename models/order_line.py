@@ -1,6 +1,8 @@
 from odoo import fields, models
 
 class OrderLine(models.Model):
+    """One work item of a repair order."""
+
     _name='fixit.order.line'
     _description = 'Order line of Fixit'
 
