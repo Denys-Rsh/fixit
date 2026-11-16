@@ -1,40 +1,134 @@
 <odoo>
-    <!-- Orders: every field used in the report is filled -->
+    <!-- Repairmen (res.users): used by orders, the report and the wizards -->
+    <record id="demo_repairman_1" model="res.users">
+        <field name="name">Ivan Kovalenko</field>
+        <field name="login">ivan.kovalenko@fixit.example.com</field>
+        <field name="email">ivan.kovalenko@fixit.example.com</field>
+    </record>
+    <record id="demo_repairman_2" model="res.users">
+        <field name="name">Olena Shevchuk</field>
+        <field name="login">olena.shevchuk@fixit.example.com</field>
+        <field name="email">olena.shevchuk@fixit.example.com</field>
+    </record>
+    <record id="demo_repairman_3" model="res.users">
+        <field name="name">Taras Melnyk</field>
+        <field name="login">taras.melnyk@fixit.example.com</field>
+        <field name="email">taras.melnyk@fixit.example.com</field>
+    </record>
+
+    <!-- Clients (res.partner) -->
+    <record id="demo_client_1" model="res.partner">
+        <field name="name">Andrii Bondarenko</field>
+        <field name="email">andrii.bondarenko@example.com</field>
+        <field name="phone">+380 67 111 2233</field>
+    </record>
+    <record id="demo_client_2" model="res.partner">
+        <field name="name">Maria Tkachenko</field>
+        <field name="email">maria.tkachenko@example.com</field>
+        <field name="phone">+380 50 444 5566</field>
+    </record>
+    <record id="demo_client_3" model="res.partner">
+        <field name="name">Serhii Lysenko</field>
+        <field name="email">serhii.lysenko@example.com</field>
+        <field name="phone">+380 93 777 8899</field>
+    </record>
+
+    <!-- Parts -->
+    <record id="demo_part_1" model="fixit.part">
+        <field name="name">Laptop keyboard Lenovo IdeaPad 5</field>
+        <field name="price">1450.00</field>
+    </record>
+    <record id="demo_part_2" model="fixit.part">
+        <field name="name">Samsung A52 AMOLED display</field>
+        <field name="price">3200.00</field>
+    </record>
+    <record id="demo_part_3" model="fixit.part">
+        <field name="name">Li-ion battery 4500 mAh</field>
+        <field name="price">850.00</field>
+    </record>
+    <record id="demo_part_4" model="fixit.part">
+        <field name="name">HP LaserJet paper feed roller</field>
+        <field name="price">420.00</field>
+    </record>
+
+    <!-- Orders: one per state, so every kanban column has a card;
+         every field read by the report (name, state, repairman, lines) is filled -->
     <record id="demo_order_1" model="fixit.order">
-        <field name="name">Laptop Lenovo IdeaPad</field>
-        <field name="state">diagnostics</field>
-        <field name="repairman_id" ref="base.user_admin" />
+        <field name="name">Laptop Lenovo IdeaPad 5</field>
+        <field name="state">new_request</field>
+        <field name="repairman_id" ref="demo_repairman_1" />
     </record>
     <record id="demo_order_2" model="fixit.order">
         <field name="name">Phone Samsung A52</field>
-        <field name="state">in_repair</field>
-        <field name="repairman_id" ref="base.user_demo" />
+        <field name="state">diagnostics</field>
+        <field name="repairman_id" ref="demo_repairman_2" />
     </record>
     <record id="demo_order_3" model="fixit.order">
-        <field name="name">Printer HP LaserJet</field>
+        <field name="name">Printer HP LaserJet Pro</field>
+        <field name="state">awaiting</field>
+        <field name="repairman_id" ref="demo_repairman_3" />
+    </record>
+    <record id="demo_order_4" model="fixit.order">
+        <field name="name">Tablet iPad Air</field>
+        <field name="state">customer_approval</field>
+        <field name="repairman_id" ref="demo_repairman_1" />
+    </record>
+    <record id="demo_order_5" model="fixit.order">
+        <field name="name">Monitor Dell P2422H</field>
+        <field name="state">in_repair</field>
+        <field name="repairman_id" ref="demo_repairman_2" />
+    </record>
+    <record id="demo_order_6" model="fixit.order">
+        <field name="name">Coffee machine DeLonghi</field>
         <field name="state">ready</field>
-        <field name="repairman_id" ref="base.user_admin" />
+        <field name="repairman_id" ref="demo_repairman_3" />
+    </record>
+    <record id="demo_order_7" model="fixit.order">
+        <field name="name">Smartwatch Garmin Venu</field>
+        <field name="state">picked_up</field>
+        <field name="repairman_id" ref="demo_repairman_1" />
+    </record>
+    <record id="demo_order_8" model="fixit.order">
+        <field name="name">Game console PS5</field>
+        <field name="state">cancelled</field>
+        <field name="repairman_id" ref="demo_repairman_2" />
     </record>
 
-    <!-- Order lines -->
+    <!-- Order lines: every order has at least one, so the report's "Works" table is never empty -->
     <record id="demo_order_line_1" model="fixit.order.line">
-        <field name="name">Diagnostics</field>
+        <field name="name">Initial inspection</field>
         <field name="order_id" ref="demo_order_1" />
     </record>
     <record id="demo_order_line_2" model="fixit.order.line">
-        <field name="name">Keyboard replacement</field>
-        <field name="order_id" ref="demo_order_1" />
+        <field name="name">Diagnostics</field>
+        <field name="order_id" ref="demo_order_2" />
     </record>
     <record id="demo_order_line_3" model="fixit.order.line">
-        <field name="name">Screen replacement</field>
-        <field name="order_id" ref="demo_order_2" />
+        <field name="name">Ordering feed roller from supplier</field>
+        <field name="order_id" ref="demo_order_3" />
     </record>
     <record id="demo_order_line_4" model="fixit.order.line">
-        <field name="name">Battery replacement</field>
-        <field name="order_id" ref="demo_order_2" />
+        <field name="name">Screen replacement (quote sent)</field>
+        <field name="order_id" ref="demo_order_4" />
     </record>
     <record id="demo_order_line_5" model="fixit.order.line">
-        <field name="name">Paper feed roller cleaning</field>
-        <field name="order_id" ref="demo_order_3" />
+        <field name="name">Power board replacement</field>
+        <field name="order_id" ref="demo_order_5" />
+    </record>
+    <record id="demo_order_line_6" model="fixit.order.line">
+        <field name="name">Backlight check</field>
+        <field name="order_id" ref="demo_order_5" />
+    </record>
+    <record id="demo_order_line_7" model="fixit.order.line">
+        <field name="name">Descaling and pump replacement</field>
+        <field name="order_id" ref="demo_order_6" />
+    </record>
+    <record id="demo_order_line_8" model="fixit.order.line">
+        <field name="name">Battery replacement</field>
+        <field name="order_id" ref="demo_order_7" />
+    </record>
+    <record id="demo_order_line_9" model="fixit.order.line">
+        <field name="name">Diagnostics (client declined repair)</field>
+        <field name="order_id" ref="demo_order_8" />
     </record>
 </odoo>
