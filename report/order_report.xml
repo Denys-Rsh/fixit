@@ -1,0 +1,53 @@
+<odoo>
+    <!-- Print action: appears in the "Print" menu of orders -->
+    <record id="fixit_order_report" model="ir.actions.report">
+        <field name="name">Repair Order</field>
+        <field name="model">fixit.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fixit.report_fixit_order</field>
+        <field name="report_file">fixit.report_fixit_order</field>
+        <field name="print_report_name">'Order - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_fixit_order" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- One external_layout per order: every order gets its own page with header and footer -->
+    <template id="report_fixit_order">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Repair Order: <span t-field="o.name" /></h2>
+
+                        <table class="table table-sm mt-4">
+                            <tr>
+                                <th>Status</th>
+                                <td><span t-field="o.state" /></td>
+                            </tr>
+                            <tr>
+                                <th>Repairman</th>
+                                <td><span t-field="o.repairman_id" /></td>
+                            </tr>
+                        </table>
+
+                        <h4 class="mt-4">Works</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td><span t-out="line_index + 1" /></td>
+                                    <td><span t-field="line.name" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

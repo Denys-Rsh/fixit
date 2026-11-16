@@ -1,0 +1,40 @@
+<odoo>
+    <!-- Orders: every field used in the report is filled -->
+    <record id="demo_order_1" model="fixit.order">
+        <field name="name">Laptop Lenovo IdeaPad</field>
+        <field name="state">diagnostics</field>
+        <field name="repairman_id" ref="base.user_admin" />
+    </record>
+    <record id="demo_order_2" model="fixit.order">
+        <field name="name">Phone Samsung A52</field>
+        <field name="state">in_repair</field>
+        <field name="repairman_id" ref="base.user_demo" />
+    </record>
+    <record id="demo_order_3" model="fixit.order">
+        <field name="name">Printer HP LaserJet</field>
+        <field name="state">ready</field>
+        <field name="repairman_id" ref="base.user_admin" />
+    </record>
+
+    <!-- Order lines -->
+    <record id="demo_order_line_1" model="fixit.order.line">
+        <field name="name">Diagnostics</field>
+        <field name="order_id" ref="demo_order_1" />
+    </record>
+    <record id="demo_order_line_2" model="fixit.order.line">
+        <field name="name">Keyboard replacement</field>
+        <field name="order_id" ref="demo_order_1" />
+    </record>
+    <record id="demo_order_line_3" model="fixit.order.line">
+        <field name="name">Screen replacement</field>
+        <field name="order_id" ref="demo_order_2" />
+    </record>
+    <record id="demo_order_line_4" model="fixit.order.line">
+        <field name="name">Battery replacement</field>
+        <field name="order_id" ref="demo_order_2" />
+    </record>
+    <record id="demo_order_line_5" model="fixit.order.line">
+        <field name="name">Paper feed roller cleaning</field>
+        <field name="order_id" ref="demo_order_3" />
+    </record>
+</odoo>

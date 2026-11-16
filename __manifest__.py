@@ -11,7 +11,7 @@
     "application": True,
     "installable": True,
 
-    "depends": ["base"],
+    "depends": ["base", "web"],
 
     "data": [
         "security/ir.model.access.csv",
@@ -22,7 +22,9 @@
         "views/repairman_views.xml",
         "views/part_views.xml",
         "wizard/mass_reassign_repairman_wizard_view.xml",
+        "wizard/order_report_wizard_view.xml",
+        "report/order_report.xml",
     ],
 
-    "demo": []
+    "demo": ["demo/demo.xml"],
 }
