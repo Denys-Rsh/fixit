@@ -4,16 +4,19 @@
         <field name="name">Ivan Kovalenko</field>
         <field name="login">ivan.kovalenko@fixit.example.com</field>
         <field name="email">ivan.kovalenko@fixit.example.com</field>
+        <field name="group_ids" eval="[(4, ref('group_fixit_user'))]" />
     </record>
     <record id="demo_repairman_2" model="res.users">
         <field name="name">Olena Shevchuk</field>
         <field name="login">olena.shevchuk@fixit.example.com</field>
         <field name="email">olena.shevchuk@fixit.example.com</field>
+        <field name="group_ids" eval="[(4, ref('group_fixit_user'))]" />
     </record>
     <record id="demo_repairman_3" model="res.users">
         <field name="name">Taras Melnyk</field>
         <field name="login">taras.melnyk@fixit.example.com</field>
         <field name="email">taras.melnyk@fixit.example.com</field>
+        <field name="group_ids" eval="[(4, ref('group_fixit_user'))]" />
     </record>
 
     <!-- Clients (res.partner) -->
