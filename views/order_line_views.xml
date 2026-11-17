@@ -4,7 +4,12 @@
         <field name="model">fixit.order.line</field>
         <field name="arch" type="xml">
             <list>
+                <field name="order_id" />
                 <field name="name" />
+                <field name="part_id" />
+                <field name="quantity" />
+                <field name="price" />
+                <field name="subtotal" />
             </list>
         </field>
     </record>
@@ -16,8 +21,15 @@
             <form>
                 <sheet>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="Name"/></h1>
+                        <h1><field name="name" placeholder="Name" /></h1>
                     </div>
+                    <group>
+                        <field name="order_id" />
+                        <field name="part_id" />
+                        <field name="quantity" />
+                        <field name="price" />
+                        <field name="subtotal" />
+                    </group>
                 </sheet>
             </form>
         </field>
@@ -33,5 +45,5 @@
               name="Order Lines"
               parent="fixit_order_main_menu"
               action="fixit_order_line_action"
-              sequence="10"/>
+              sequence="20"/>
 </odoo>

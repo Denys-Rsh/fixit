@@ -19,6 +19,8 @@
         "views/menu.xml",
         "views/order_views.xml",
         "views/order_line_views.xml",
+        "views/device_views.xml",
+        "views/device_type_views.xml",
         "views/client_views.xml",
         "views/repairman_views.xml",
         "views/part_views.xml",

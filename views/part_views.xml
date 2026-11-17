@@ -5,6 +5,8 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="device_type_id" />
+                <field name="price" />
             </list>
         </field>
     </record>
@@ -16,9 +18,12 @@
             <form>
                 <sheet>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="Name"/></h1>
+                        <h1><field name="name" placeholder="Name" /></h1>
                     </div>
-                    <field name="price"/>
+                    <group>
+                        <field name="device_type_id" />
+                        <field name="price" />
+                    </group>
                 </sheet>
             </form>
         </field>
@@ -32,7 +37,7 @@
 
     <menuitem id="fixit_part_action_menu"
               name="Parts"
-              parent="fixit_root_menu"
+              parent="fixit_config_menu"
               action="fixit_part_action"
-              sequence="10"/>
+              sequence="20"/>
 </odoo>

@@ -5,7 +5,10 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="client_id" />
+                <field name="device_id" />
                 <field name="repairman_id" />
+                <field name="state" />
             </list>
         </field>
     </record>
@@ -15,26 +18,56 @@
         <field name="model">fixit.order</field>
         <field name="arch" type="xml">
             <form>
+                <!-- The state changes only with these buttons -->
+                <header>
+                    <button name="action_diagnostics" type="object" string="Start Diagnostics"
+                            invisible="state != 'new_request'" />
+                    <button name="action_approval" type="object" string="Send for Approval"
+                            invisible="state != 'diagnostics'" />
+                    <button name="action_awaiting" type="object" string="Wait for Parts"
+                            invisible="state != 'customer_approval'" />
+                    <button name="action_repair" type="object" string="Start Repair"
+                            invisible="state not in ('customer_approval', 'awaiting')" />
+                    <button name="action_ready" type="object" string="Mark Ready"
+                            invisible="state != 'in_repair'" />
+                    <button name="action_picked_up" type="object" string="Picked Up"
+                            invisible="state != 'ready'" />
+                    <button name="action_cancel" type="object" string="Cancel Order"
+                            invisible="state in ('ready', 'picked_up', 'cancelled')" />
+                    <field name="state" widget="statusbar" />
+                </header>
                 <sheet>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="Name"/></h1>
+                        <h1><field name="name" placeholder="Name" /></h1>
                     </div>
                     <group>
+                        <field name="client_id" />
+                        <field name="device_id" />
                         <field name="repairman_id" />
                     </group>
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="name" />
+                            <field name="part_id" />
+                            <field name="quantity" />
+                            <field name="price" />
+                            <field name="subtotal" />
+                        </list>
+                    </field>
                 </sheet>
             </form>
         </field>
     </record>
 
+    <!-- records_draggable="0": cards cannot be dragged to another state -->
     <record id="fixit_order_kanban_view" model="ir.ui.view">
         <field name="name">fixit.order.kanban</field>
         <field name="model">fixit.order</field>
         <field name="arch" type="xml">
-            <kanban sample="1" default_group_by="state">
+            <kanban sample="1" default_group_by="state" records_draggable="0">
                 <templates>
                     <t t-name="card">
-                        <field name="name" class="fw-bold fs-5"/>
+                        <field name="name" class="fw-bold fs-5" />
                     </t>
                 </templates>
             </kanban>

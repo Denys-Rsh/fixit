@@ -3,4 +3,9 @@
               name="Fixit"
               sequence="300"
               groups="group_fixit_user"/>
+
+    <menuitem id="fixit_config_menu"
+              name="Configuration"
+              parent="fixit_root_menu"
+              sequence="100"/>
 </odoo>

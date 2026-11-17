@@ -25,6 +25,14 @@
                                 <td><span t-field="o.state" /></td>
                             </tr>
                             <tr>
+                                <th>Client</th>
+                                <td><span t-field="o.client_id" /></td>
+                            </tr>
+                            <tr>
+                                <th>Device</th>
+                                <td><span t-field="o.device_id" /></td>
+                            </tr>
+                            <tr>
                                 <th>Repairman</th>
                                 <td><span t-field="o.repairman_id" /></td>
                             </tr>
@@ -36,12 +44,20 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Description</th>
+                                    <th>Part</th>
+                                    <th class="text-end">Qty</th>
+                                    <th class="text-end">Price</th>
+                                    <th class="text-end">Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr t-foreach="o.line_ids" t-as="line">
                                     <td><span t-out="line_index + 1" /></td>
                                     <td><span t-field="line.name" /></td>
+                                    <td><span t-field="line.part_id" /></td>
+                                    <td class="text-end"><span t-field="line.quantity" /></td>
+                                    <td class="text-end"><span t-field="line.price" /></td>
+                                    <td class="text-end"><span t-field="line.subtotal" /></td>
                                 </tr>
                             </tbody>
                         </table>

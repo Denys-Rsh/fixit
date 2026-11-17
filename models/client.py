@@ -1,9 +1,9 @@
 from odoo import fields, models
 
+
 class Client(models.Model):
     """Client of the service center (extends res.partner)."""
 
-    _inherit='res.partner'
-    _description = 'Client of Fixit'
+    _inherit = 'res.partner'
 
-    name = fields.Char(string='Name')
+    fixit_device_ids = fields.One2many(comodel_name='fixit.device', inverse_name='client_id', string='Devices')

@@ -1,0 +1,45 @@
+<odoo>
+    <record id="fixit_device_list_view" model="ir.ui.view">
+        <field name="name">fixit.device.list</field>
+        <field name="model">fixit.device</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="serial_number" />
+                <field name="device_type_id" />
+                <field name="client_id" />
+            </list>
+        </field>
+    </record>
+
+    <record id="fixit_device_form_view" model="ir.ui.view">
+        <field name="name">fixit.device.form</field>
+        <field name="model">fixit.device</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Name" /></h1>
+                    </div>
+                    <group>
+                        <field name="serial_number" />
+                        <field name="device_type_id" />
+                        <field name="client_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fixit_device_action" model="ir.actions.act_window">
+        <field name="name">Devices</field>
+        <field name="res_model">fixit.device</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="fixit_device_action_menu"
+              name="Devices"
+              parent="fixit_order_main_menu"
+              action="fixit_device_action"
+              sequence="30"/>
+</odoo>

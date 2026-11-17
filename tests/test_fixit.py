@@ -30,7 +30,35 @@ class TestFixit(TransactionCase):
             self.env['fixit.order'].with_user(self.portal).create({'name': 'Phone'})
         self.assertIn('(fixit.order)', str(error.exception))
 
+    # ---------- fixit.order: states ----------
+
+    def test_order_states(self):
+        """Buttons move the order step by step up to Picked Up."""
+        order = self.env['fixit.order'].create({'name': 'Laptop'})
+        self.assertEqual(order.state, 'new_request')
+        order.action_diagnostics()
+        order.action_approval()
+        order.action_repair()
+        order.action_ready()
+        order.action_picked_up()
+        self.assertEqual(order.state, 'picked_up')
+
+    def test_order_cannot_skip_states(self):
+        """A new order cannot jump straight to Picked Up."""
+        order = self.env['fixit.order'].create({'name': 'Laptop'})
+        with self.assertRaises(UserError):
+            order.action_picked_up()
+        self.assertEqual(order.state, 'new_request')
+
     # ---------- fixit.order.line ----------
+
+    def test_order_line_subtotal(self):
+        """Subtotal is quantity * price."""
+        order = self.env['fixit.order'].create({
+            'name': 'Phone',
+            'line_ids': [(0, 0, {'name': 'Battery', 'quantity': 2, 'price': 500})],
+        })
+        self.assertEqual(order.line_ids.subtotal, 1000)
 
     def test_order_line_access(self):
         """Portal user cannot read order lines."""

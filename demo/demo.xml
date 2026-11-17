@@ -33,62 +33,162 @@
         <field name="phone">+380 93 777 8899</field>
     </record>
 
+    <!-- Device types (reference) -->
+    <record id="demo_device_type_laptop" model="fixit.device.type">
+        <field name="name">Laptop</field>
+        <field name="warranty_months">6</field>
+    </record>
+    <record id="demo_device_type_phone" model="fixit.device.type">
+        <field name="name">Smartphone</field>
+        <field name="warranty_months">3</field>
+    </record>
+    <record id="demo_device_type_tablet" model="fixit.device.type">
+        <field name="name">Tablet</field>
+        <field name="warranty_months">3</field>
+    </record>
+    <record id="demo_device_type_printer" model="fixit.device.type">
+        <field name="name">Printer</field>
+        <field name="warranty_months">6</field>
+    </record>
+    <record id="demo_device_type_monitor" model="fixit.device.type">
+        <field name="name">Monitor</field>
+        <field name="warranty_months">6</field>
+    </record>
+    <record id="demo_device_type_appliance" model="fixit.device.type">
+        <field name="name">Coffee Machine</field>
+        <field name="warranty_months">3</field>
+    </record>
+    <record id="demo_device_type_other" model="fixit.device.type">
+        <field name="name">Wearable / Console</field>
+        <field name="warranty_months">1</field>
+    </record>
+
     <!-- Parts -->
     <record id="demo_part_1" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_laptop" />
         <field name="name">Laptop keyboard Lenovo IdeaPad 5</field>
         <field name="price">1450.00</field>
     </record>
     <record id="demo_part_2" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_phone" />
         <field name="name">Samsung A52 AMOLED display</field>
         <field name="price">3200.00</field>
     </record>
     <record id="demo_part_3" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_phone" />
         <field name="name">Li-ion battery 4500 mAh</field>
         <field name="price">850.00</field>
     </record>
     <record id="demo_part_4" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_printer" />
         <field name="name">HP LaserJet paper feed roller</field>
         <field name="price">420.00</field>
+    </record>
+
+    <!-- Client devices -->
+    <record id="demo_device_1" model="fixit.device">
+        <field name="name">Lenovo IdeaPad 5</field>
+        <field name="serial_number">PF3K1L9Z</field>
+        <field name="device_type_id" ref="demo_device_type_laptop" />
+        <field name="client_id" ref="demo_client_1" />
+    </record>
+    <record id="demo_device_2" model="fixit.device">
+        <field name="name">Samsung Galaxy A52</field>
+        <field name="serial_number">R58R31ABCDE</field>
+        <field name="device_type_id" ref="demo_device_type_phone" />
+        <field name="client_id" ref="demo_client_2" />
+    </record>
+    <record id="demo_device_3" model="fixit.device">
+        <field name="name">HP LaserJet Pro M404</field>
+        <field name="serial_number">VNB3K12345</field>
+        <field name="device_type_id" ref="demo_device_type_printer" />
+        <field name="client_id" ref="demo_client_3" />
+    </record>
+    <record id="demo_device_4" model="fixit.device">
+        <field name="name">Apple iPad Air</field>
+        <field name="serial_number">DMPXK1Q2J1</field>
+        <field name="device_type_id" ref="demo_device_type_tablet" />
+        <field name="client_id" ref="demo_client_1" />
+    </record>
+    <record id="demo_device_5" model="fixit.device">
+        <field name="name">Dell P2422H</field>
+        <field name="serial_number">CN0D2422H01</field>
+        <field name="device_type_id" ref="demo_device_type_monitor" />
+        <field name="client_id" ref="demo_client_2" />
+    </record>
+    <record id="demo_device_6" model="fixit.device">
+        <field name="name">DeLonghi Magnifica S</field>
+        <field name="serial_number">DL-ECAM-22110</field>
+        <field name="device_type_id" ref="demo_device_type_appliance" />
+        <field name="client_id" ref="demo_client_3" />
+    </record>
+    <record id="demo_device_7" model="fixit.device">
+        <field name="name">Garmin Venu 2</field>
+        <field name="serial_number">GV2-5521874</field>
+        <field name="device_type_id" ref="demo_device_type_other" />
+        <field name="client_id" ref="demo_client_1" />
+    </record>
+    <record id="demo_device_8" model="fixit.device">
+        <field name="name">Sony PlayStation 5</field>
+        <field name="serial_number">PS5-E01-7741</field>
+        <field name="device_type_id" ref="demo_device_type_other" />
+        <field name="client_id" ref="demo_client_2" />
     </record>
 
     <!-- Orders: one per state, so every kanban column has a card;
          every field read by the report (name, state, repairman, lines) is filled -->
     <record id="demo_order_1" model="fixit.order">
+        <field name="client_id" ref="demo_client_1" />
+        <field name="device_id" ref="demo_device_1" />
         <field name="name">Laptop Lenovo IdeaPad 5</field>
         <field name="state">new_request</field>
         <field name="repairman_id" ref="demo_repairman_1" />
     </record>
     <record id="demo_order_2" model="fixit.order">
+        <field name="client_id" ref="demo_client_2" />
+        <field name="device_id" ref="demo_device_2" />
         <field name="name">Phone Samsung A52</field>
         <field name="state">diagnostics</field>
         <field name="repairman_id" ref="demo_repairman_2" />
     </record>
     <record id="demo_order_3" model="fixit.order">
+        <field name="client_id" ref="demo_client_3" />
+        <field name="device_id" ref="demo_device_3" />
         <field name="name">Printer HP LaserJet Pro</field>
         <field name="state">awaiting</field>
         <field name="repairman_id" ref="demo_repairman_3" />
     </record>
     <record id="demo_order_4" model="fixit.order">
+        <field name="client_id" ref="demo_client_1" />
+        <field name="device_id" ref="demo_device_4" />
         <field name="name">Tablet iPad Air</field>
         <field name="state">customer_approval</field>
         <field name="repairman_id" ref="demo_repairman_1" />
     </record>
     <record id="demo_order_5" model="fixit.order">
+        <field name="client_id" ref="demo_client_2" />
+        <field name="device_id" ref="demo_device_5" />
         <field name="name">Monitor Dell P2422H</field>
         <field name="state">in_repair</field>
         <field name="repairman_id" ref="demo_repairman_2" />
     </record>
     <record id="demo_order_6" model="fixit.order">
+        <field name="client_id" ref="demo_client_3" />
+        <field name="device_id" ref="demo_device_6" />
         <field name="name">Coffee machine DeLonghi</field>
         <field name="state">ready</field>
         <field name="repairman_id" ref="demo_repairman_3" />
     </record>
     <record id="demo_order_7" model="fixit.order">
+        <field name="client_id" ref="demo_client_1" />
+        <field name="device_id" ref="demo_device_7" />
         <field name="name">Smartwatch Garmin Venu</field>
         <field name="state">picked_up</field>
         <field name="repairman_id" ref="demo_repairman_1" />
     </record>
     <record id="demo_order_8" model="fixit.order">
+        <field name="client_id" ref="demo_client_2" />
+        <field name="device_id" ref="demo_device_8" />
         <field name="name">Game console PS5</field>
         <field name="state">cancelled</field>
         <field name="repairman_id" ref="demo_repairman_2" />
@@ -98,37 +198,57 @@
     <record id="demo_order_line_1" model="fixit.order.line">
         <field name="name">Initial inspection</field>
         <field name="order_id" ref="demo_order_1" />
+        <field name="quantity">1</field>
+        <field name="price">200</field>
     </record>
     <record id="demo_order_line_2" model="fixit.order.line">
         <field name="name">Diagnostics</field>
         <field name="order_id" ref="demo_order_2" />
+        <field name="quantity">1</field>
+        <field name="price">300</field>
     </record>
     <record id="demo_order_line_3" model="fixit.order.line">
         <field name="name">Ordering feed roller from supplier</field>
         <field name="order_id" ref="demo_order_3" />
+        <field name="part_id" ref="demo_part_4" />
+        <field name="quantity">1</field>
+        <field name="price">420</field>
     </record>
     <record id="demo_order_line_4" model="fixit.order.line">
         <field name="name">Screen replacement (quote sent)</field>
         <field name="order_id" ref="demo_order_4" />
+        <field name="quantity">1</field>
+        <field name="price">4500</field>
     </record>
     <record id="demo_order_line_5" model="fixit.order.line">
         <field name="name">Power board replacement</field>
         <field name="order_id" ref="demo_order_5" />
+        <field name="quantity">1</field>
+        <field name="price">1800</field>
     </record>
     <record id="demo_order_line_6" model="fixit.order.line">
         <field name="name">Backlight check</field>
         <field name="order_id" ref="demo_order_5" />
+        <field name="quantity">1</field>
+        <field name="price">250</field>
     </record>
     <record id="demo_order_line_7" model="fixit.order.line">
         <field name="name">Descaling and pump replacement</field>
         <field name="order_id" ref="demo_order_6" />
+        <field name="quantity">1</field>
+        <field name="price">1200</field>
     </record>
     <record id="demo_order_line_8" model="fixit.order.line">
         <field name="name">Battery replacement</field>
         <field name="order_id" ref="demo_order_7" />
+        <field name="part_id" ref="demo_part_3" />
+        <field name="quantity">1</field>
+        <field name="price">850</field>
     </record>
     <record id="demo_order_line_9" model="fixit.order.line">
         <field name="name">Diagnostics (client declined repair)</field>
         <field name="order_id" ref="demo_order_8" />
+        <field name="quantity">1</field>
+        <field name="price">300</field>
     </record>
 </odoo>

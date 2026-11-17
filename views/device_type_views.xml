@@ -1,0 +1,41 @@
+<odoo>
+    <record id="fixit_device_type_list_view" model="ir.ui.view">
+        <field name="name">fixit.device.type.list</field>
+        <field name="model">fixit.device.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="warranty_months" />
+            </list>
+        </field>
+    </record>
+
+    <record id="fixit_device_type_form_view" model="ir.ui.view">
+        <field name="name">fixit.device.type.form</field>
+        <field name="model">fixit.device.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Name" /></h1>
+                    </div>
+                    <group>
+                        <field name="warranty_months" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fixit_device_type_action" model="ir.actions.act_window">
+        <field name="name">Device Types</field>
+        <field name="res_model">fixit.device.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="fixit_device_type_action_menu"
+              name="Device Types"
+              parent="fixit_config_menu"
+              action="fixit_device_type_action"
+              sequence="10"/>
+</odoo>
