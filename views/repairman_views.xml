@@ -1,11 +1,40 @@
 <odoo>
+    <!-- priority 99: these views are used only by the Fixit action, not in Settings > Users -->
     <record id="fixit_repairman_list_view" model="ir.ui.view">
         <field name="name">res.users.fixit.repairman.list</field>
         <field name="model">res.users</field>
+        <field name="priority">99</field>
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="login" />
             </list>
+        </field>
+    </record>
+
+    <record id="fixit_repairman_form_view" model="ir.ui.view">
+        <field name="name">res.users.fixit.repairman.form</field>
+        <field name="model">res.users</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Name" /></h1>
+                    </div>
+                    <group>
+                        <field name="login" />
+                    </group>
+                    <field name="fixit_order_ids" readonly="1">
+                        <list>
+                            <field name="name" />
+                            <field name="client_id" />
+                            <field name="device_id" />
+                            <field name="state" />
+                        </list>
+                    </field>
+                </sheet>
+            </form>
         </field>
     </record>
 
@@ -13,6 +42,9 @@
         <field name="name">Repairman</field>
         <field name="res_model">res.users</field>
         <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('fixit_repairman_list_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('fixit_repairman_form_view')})]" />
     </record>
 
     <menuitem id="fixit_repairman_action_menu"

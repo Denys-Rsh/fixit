@@ -1,11 +1,41 @@
 <odoo>
+    <!-- priority 99: these views are used only by the Fixit action, not in Contacts -->
     <record id="fixit_client_list_view" model="ir.ui.view">
         <field name="name">res.partner.fixit.client.list</field>
         <field name="model">res.partner</field>
+        <field name="priority">99</field>
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="phone" />
+                <field name="email" />
             </list>
+        </field>
+    </record>
+
+    <record id="fixit_client_form_view" model="ir.ui.view">
+        <field name="name">res.partner.fixit.client.form</field>
+        <field name="model">res.partner</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Name" /></h1>
+                    </div>
+                    <group>
+                        <field name="phone" />
+                        <field name="email" />
+                    </group>
+                    <field name="fixit_device_ids">
+                        <list editable="bottom">
+                            <field name="name" />
+                            <field name="serial_number" />
+                            <field name="device_type_id" />
+                        </list>
+                    </field>
+                </sheet>
+            </form>
         </field>
     </record>
 
@@ -13,6 +43,9 @@
         <field name="name">Client</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('fixit_client_list_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('fixit_client_form_view')})]" />
     </record>
 
     <menuitem id="fixit_client_action_menu"
