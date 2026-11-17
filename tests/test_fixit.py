@@ -49,9 +49,19 @@ class TestFixit(TransactionCase):
     def test_order_cannot_skip_states(self):
         """A new order cannot jump straight to Picked Up."""
         order = self.env['fixit.order'].create({'name': 'Laptop'})
-        with self.assertRaises(UserError):
+        with self.assertRaises(UserError) as error:
             order.action_picked_up()
+        self.assertEqual(str(error.exception), 'This order cannot go to this status now.')
         self.assertEqual(order.state, 'new_request')
+
+    def test_order_final_state(self):
+        """A cancelled order cannot be moved anywhere."""
+        order = self.env['fixit.order'].create({'name': 'Laptop'})
+        order.action_cancel()
+        with self.assertRaises(UserError) as error:
+            order.action_diagnostics()
+        self.assertEqual(str(error.exception), 'This order cannot go to this status now.')
+        self.assertEqual(order.state, 'cancelled')
 
     # ---------- fixit.order.line ----------
 
@@ -77,8 +87,9 @@ class TestFixit(TransactionCase):
     def test_order_line_quantity(self):
         """Quantity must be greater than zero."""
         order = self.env['fixit.order'].create({'name': 'Phone'})
-        with self.assertRaises(IntegrityError), mute_logger('odoo.sql_db'):
+        with self.assertRaises(IntegrityError) as error, mute_logger('odoo.sql_db'):
             self.env['fixit.order.line'].create({'name': 'Battery', 'quantity': 0, 'order_id': order.id})
+        self.assertIn('check_quantity', str(error.exception))
 
     def test_order_line_access(self):
         """Portal user cannot read order lines."""
@@ -103,6 +114,28 @@ class TestFixit(TransactionCase):
         with self.assertRaises(AccessError) as error:
             self.env['fixit.part'].with_user(self.portal).search([])
         self.assertIn('(fixit.part)', str(error.exception))
+
+    # ---------- fixit.device.type ----------
+
+    def test_device_type_access(self):
+        """Repairman can read device types but cannot create them."""
+        laptop = self.env['fixit.device.type'].create({'name': 'Laptop'})
+        self.assertEqual(laptop.with_user(self.repairman).warranty_months, 3)
+
+        with self.assertRaises(AccessError) as error:
+            self.env['fixit.device.type'].with_user(self.repairman).create({'name': 'Phone'})
+        self.assertIn('(fixit.device.type)', str(error.exception))
+
+    # ---------- fixit.device ----------
+
+    def test_device_access(self):
+        """Repairman can register a device but cannot delete it."""
+        device = self.env['fixit.device'].with_user(self.repairman).create({'name': 'iPhone 15'})
+
+        with self.assertRaises(AccessError) as error:
+            device.unlink()
+        self.assertIn('(fixit.device)', str(error.exception))
+        self.assertTrue(device.exists())
 
     # ---------- ir.rule ----------
 
