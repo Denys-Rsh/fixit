@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-16 10:28+0000\n"
-"PO-Revision-Date: 2026-11-16 10:28+0000\n"
+"POT-Creation-Date: 2026-11-17 09:42+0000\n"
+"PO-Revision-Date: 2026-11-17 09:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,14 +21,19 @@ msgid "'Order - %s' % object.name"
 msgstr "'Замовлення - %s' % object.name"
 
 #. module: fixit
+#: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
+msgid "<strong>Total</strong>"
+msgstr "<strong>Разом</strong>"
+
+#. module: fixit
 #: model:res.groups,name:fixit.group_fixit_admin
 msgid "Admin"
 msgstr "Адміністратор"
 
 #. module: fixit
 #: model:ir.model.fields.selection,name:fixit.selection__fixit_order__state__awaiting
-msgid "Awaiting"
-msgstr "Очікування"
+msgid "Awaiting Parts"
+msgstr "Очікування запчастин"
 
 #. module: fixit
 #: model_terms:ir.ui.view,arch_db:fixit.fixit_mass_reassign_repairman_wizard_form
@@ -37,19 +42,26 @@ msgid "Cancel"
 msgstr "Скасувати"
 
 #. module: fixit
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
+msgid "Cancel Order"
+msgstr "Скасувати замовлення"
+
+#. module: fixit
 #: model:ir.model.fields.selection,name:fixit.selection__fixit_order__state__cancelled
 msgid "Cancelled"
 msgstr "Скасовано"
 
 #. module: fixit
 #: model:ir.actions.act_window,name:fixit.fixit_client_action
+#: model:ir.model.fields,field_description:fixit.field_fixit_order__client_id
+#: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
 msgid "Client"
 msgstr "Клієнт"
 
 #. module: fixit
-#: model:ir.model,name:fixit.model_res_partner
-msgid "Client of Fixit"
-msgstr "Контакт"
+#: model:ir.model,name:fixit.model_fixit_device
+msgid "Client device"
+msgstr "Пристрій клієнта"
 
 #. module: fixit
 #: model:ir.ui.menu,name:fixit.fixit_client_action_menu
@@ -57,6 +69,18 @@ msgid "Clients"
 msgstr "Клієнти"
 
 #. module: fixit
+#: model:ir.ui.menu,name:fixit.fixit_config_menu
+msgid "Configuration"
+msgstr "Налаштування"
+
+#. module: fixit
+#: model:ir.model,name:fixit.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__create_uid
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__create_uid
 #: model:ir.model.fields,field_description:fixit.field_fixit_mass_reassign_repairman_wizard__create_uid
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__create_uid
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_line__create_uid
@@ -66,6 +90,8 @@ msgid "Created by"
 msgstr "Створив"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__create_date
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__create_date
 #: model:ir.model.fields,field_description:fixit.field_fixit_mass_reassign_repairman_wizard__create_date
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__create_date
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_line__create_date
@@ -80,9 +106,28 @@ msgid "Customer Approval"
 msgstr "Погодження клієнтом"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_order_line__name
 #: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
 msgid "Description"
 msgstr "Опис"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_order__device_id
+#: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
+msgid "Device"
+msgstr "Пристрій"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__device_type_id
+#: model:ir.model.fields,field_description:fixit.field_fixit_part__device_type_id
+msgid "Device Type"
+msgstr "Тип пристрою"
+
+#. module: fixit
+#: model:ir.actions.act_window,name:fixit.fixit_device_type_action
+#: model:ir.ui.menu,name:fixit.fixit_device_type_action_menu
+msgid "Device Types"
+msgstr "Типи пристроїв"
 
 #. module: fixit
 #: model:ir.model,name:fixit.model_fixit_part
@@ -90,11 +135,26 @@ msgid "Device part"
 msgstr "Запчастина пристрою"
 
 #. module: fixit
+#: model:ir.model,name:fixit.model_fixit_device_type
+msgid "Device type"
+msgstr "Тип пристрою"
+
+#. module: fixit
+#: model:ir.actions.act_window,name:fixit.fixit_device_action
+#: model:ir.model.fields,field_description:fixit.field_res_partner__fixit_device_ids
+#: model:ir.model.fields,field_description:fixit.field_res_users__fixit_device_ids
+#: model:ir.ui.menu,name:fixit.fixit_device_action_menu
+msgid "Devices"
+msgstr "Пристрої"
+
+#. module: fixit
 #: model:ir.model.fields.selection,name:fixit.selection__fixit_order__state__diagnostics
 msgid "Diagnostics"
 msgstr "Діагностика"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__display_name
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__display_name
 #: model:ir.model.fields,field_description:fixit.field_fixit_mass_reassign_repairman_wizard__display_name
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__display_name
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_line__display_name
@@ -113,6 +173,8 @@ msgid "Fixit"
 msgstr ""
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__id
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__id
 #: model:ir.model.fields,field_description:fixit.field_fixit_mass_reassign_repairman_wizard__id
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__id
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_line__id
@@ -129,6 +191,8 @@ msgid "In Repair"
 msgstr "У ремонті"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__write_uid
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__write_uid
 #: model:ir.model.fields,field_description:fixit.field_fixit_mass_reassign_repairman_wizard__write_uid
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__write_uid
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_line__write_uid
@@ -138,6 +202,8 @@ msgid "Last Updated by"
 msgstr "Востаннє оновив"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__write_date
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__write_date
 #: model:ir.model.fields,field_description:fixit.field_fixit_mass_reassign_repairman_wizard__write_date
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__write_date
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_line__write_date
@@ -147,9 +213,9 @@ msgid "Last Updated on"
 msgstr "Останнє оновлення"
 
 #. module: fixit
-#: model:ir.model.fields,field_description:fixit.field_fixit_order__line_ids
-msgid "Line"
-msgstr "Рядки"
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
+msgid "Mark Ready"
+msgstr "Позначити готовим"
 
 #. module: fixit
 #: model:ir.model,name:fixit.model_fixit_mass_reassign_repairman_wizard
@@ -157,11 +223,16 @@ msgid "Mass reassign repairman wizard"
 msgstr "Майстер масового перепризначення майстра"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__name
+msgid "Model"
+msgstr "Модель"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__name
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__name
-#: model:ir.model.fields,field_description:fixit.field_fixit_order_line__name
 #: model:ir.model.fields,field_description:fixit.field_fixit_part__name
-#: model:ir.model.fields,field_description:fixit.field_res_partner__name
-#: model:ir.model.fields,field_description:fixit.field_res_users__name
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_device_form_view
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_device_type_form_view
 #: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
 #: model_terms:ir.ui.view,arch_db:fixit.fixit_order_line_form_view
 #: model_terms:ir.ui.view,arch_db:fixit.fixit_part_form_view
@@ -186,12 +257,8 @@ msgstr "За цими фільтрами замовлень не знайден�
 
 #. module: fixit
 #: model:ir.actions.act_window,name:fixit.fixit_order_action
-msgid "Order"
-msgstr "Замовлення"
-
-#. module: fixit
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_line__order_id
-msgid "Order ID"
+msgid "Order"
 msgstr "Замовлення"
 
 #. module: fixit
@@ -233,7 +300,14 @@ msgid "Orders report wizard"
 msgstr "Майстер звіту по замовленнях"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__client_id
+msgid "Owner"
+msgstr "Власник"
+
+#. module: fixit
 #: model:ir.actions.act_window,name:fixit.fixit_part_action
+#: model:ir.model.fields,field_description:fixit.field_fixit_order_line__part_id
+#: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
 msgid "Part"
 msgstr "Запчастина"
 
@@ -254,11 +328,14 @@ msgstr "Початок періоду"
 
 #. module: fixit
 #: model:ir.model.fields.selection,name:fixit.selection__fixit_order__state__picked_up
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
 msgid "Picked Up"
 msgstr "Видано"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_order_line__price
 #: model:ir.model.fields,field_description:fixit.field_fixit_part__price
+#: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
 msgid "Price"
 msgstr "Ціна"
 
@@ -266,6 +343,21 @@ msgstr "Ціна"
 #: model_terms:ir.ui.view,arch_db:fixit.fixit_order_report_wizard_form
 msgid "Print"
 msgstr "Друкувати"
+
+#. module: fixit
+#: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
+msgid "Qty"
+msgstr "К-сть"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_order_line__quantity
+msgid "Quantity"
+msgstr "Кількість"
+
+#. module: fixit
+#: model:ir.model.constraint,message:fixit.constraint_fixit_order_line_check_quantity
+msgid "Quantity must be positive."
+msgstr "Кількість має бути більшою за нуль."
 
 #. module: fixit
 #: model:ir.model.fields.selection,name:fixit.selection__fixit_order__state__ready
@@ -293,6 +385,11 @@ msgid "Repair Order:"
 msgstr "Замовлення на ремонт:"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_res_users__fixit_order_ids
+msgid "Repair Orders"
+msgstr "Замовлення на ремонт"
+
+#. module: fixit
 #: model:ir.actions.act_window,name:fixit.fixit_repairman_action
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__repairman_id
 #: model:ir.ui.menu,name:fixit.fixit_repairman_action_menu
@@ -306,24 +403,41 @@ msgid "Repairman Report"
 msgstr "Звіт по майстрах"
 
 #. module: fixit
-#: model:ir.model,name:fixit.model_res_users
-msgid "Repairman of Fixit"
-msgstr "Користувач"
-
-#. module: fixit
 #: model:ir.model.fields,field_description:fixit.field_fixit_order_report_wizard__repairman_ids
 msgid "Repairmen"
 msgstr "Майстри"
 
 #. module: fixit
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
+msgid "Send for Approval"
+msgstr "Надіслати на погодження"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device__serial_number
+msgid "Serial Number"
+msgstr "Серійний номер"
+
+#. module: fixit
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
+msgid "Start Diagnostics"
+msgstr "Почати діагностику"
+
+#. module: fixit
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
+msgid "Start Repair"
+msgstr "Почати ремонт"
+
+#. module: fixit
 #: model:ir.model.fields,field_description:fixit.field_fixit_order__state
-msgid "State"
+#: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
+msgid "Status"
 msgstr "Стан"
 
 #. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_order_line__subtotal
 #: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
-msgid "Status"
-msgstr "Статус"
+msgid "Subtotal"
+msgstr "Сума"
 
 #. module: fixit
 #. odoo-python
@@ -332,11 +446,34 @@ msgid "The period start cannot be later than the period end."
 msgstr "Початок періоду не може бути пізніше за його кінець."
 
 #. module: fixit
+#. odoo-python
+#: code:addons/fixit/models/order.py:0
+msgid "This order cannot go to this status now."
+msgstr "Зараз замовлення не можна перевести в цей стан."
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_order__amount_total
+msgid "Total"
+msgstr "Разом"
+
+#. module: fixit
+#: model:ir.model,name:fixit.model_res_users
 #: model:res.groups,name:fixit.group_fixit_user
 msgid "User"
 msgstr "Користувач"
 
 #. module: fixit
+#: model_terms:ir.ui.view,arch_db:fixit.fixit_order_form_view
+msgid "Wait for Parts"
+msgstr "Чекати запчастини"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_device_type__warranty_months
+msgid "Warranty (months)"
+msgstr "Гарантія (місяців)"
+
+#. module: fixit
+#: model:ir.model.fields,field_description:fixit.field_fixit_order__line_ids
 #: model_terms:ir.ui.view,arch_db:fixit.report_fixit_order
 msgid "Works"
 msgstr "Роботи"
