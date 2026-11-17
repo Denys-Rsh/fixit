@@ -39,6 +39,7 @@ class Order(models.Model):
 
     @api.depends('line_ids.subtotal')
     def _compute_amount_total(self):
+        """Total of the order is the sum of its line subtotals."""
         for order in self:
             order.amount_total = sum(order.line_ids.mapped('subtotal'))
 
@@ -50,22 +51,29 @@ class Order(models.Model):
             order.state = new_state
 
     def action_diagnostics(self):
+        """Move the order to Diagnostics."""
         self._set_state('diagnostics')
 
     def action_approval(self):
+        """Move the order to Customer Approval."""
         self._set_state('customer_approval')
 
     def action_awaiting(self):
+        """Move the order to Awaiting Parts."""
         self._set_state('awaiting')
 
     def action_repair(self):
+        """Move the order to In Repair."""
         self._set_state('in_repair')
 
     def action_ready(self):
+        """Move the order to Ready."""
         self._set_state('ready')
 
     def action_picked_up(self):
+        """Move the order to Picked Up."""
         self._set_state('picked_up')
 
     def action_cancel(self):
+        """Cancel the order."""
         self._set_state('cancelled')

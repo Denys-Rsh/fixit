@@ -18,11 +18,13 @@ class OrderLine(models.Model):
 
     @api.onchange('part_id')
     def _onchange_part_id(self):
+        """Fill the price and description from the chosen part."""
         self.price = self.part_id.price
         if not self.name:
             self.name = self.part_id.name
 
     @api.depends('quantity', 'price')
     def _compute_subtotal(self):
+        """Subtotal of the line is quantity * price."""
         for line in self:
             line.subtotal = line.quantity * line.price
