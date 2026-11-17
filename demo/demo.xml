@@ -85,6 +85,27 @@
         <field name="price">420.00</field>
     </record>
 
+    <record id="demo_part_5" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_tablet" />
+        <field name="name">iPad Air display assembly</field>
+        <field name="price">4500.00</field>
+    </record>
+    <record id="demo_part_6" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_monitor" />
+        <field name="name">Dell P2422H power board</field>
+        <field name="price">1800.00</field>
+    </record>
+    <record id="demo_part_7" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_appliance" />
+        <field name="name">DeLonghi water pump</field>
+        <field name="price">1200.00</field>
+    </record>
+    <record id="demo_part_8" model="fixit.part">
+        <field name="device_type_id" ref="demo_device_type_other" />
+        <field name="name">PS5 HDMI port</field>
+        <field name="price">300.00</field>
+    </record>
+
     <!-- Client devices -->
     <record id="demo_device_1" model="fixit.device">
         <field name="name">Lenovo IdeaPad 5</field>
@@ -194,18 +215,20 @@
         <field name="repairman_id" ref="demo_repairman_2" />
     </record>
 
-    <!-- Order lines: every order has at least one, so the report's "Works" table is never empty -->
+    <!-- Order lines: every order has at least one line with a part, so no report column is empty -->
     <record id="demo_order_line_1" model="fixit.order.line">
-        <field name="name">Initial inspection</field>
+        <field name="name">Keyboard replacement</field>
         <field name="order_id" ref="demo_order_1" />
+        <field name="part_id" ref="demo_part_1" />
         <field name="quantity">1</field>
-        <field name="price">200</field>
+        <field name="price">1450</field>
     </record>
     <record id="demo_order_line_2" model="fixit.order.line">
-        <field name="name">Diagnostics</field>
+        <field name="name">Display replacement</field>
         <field name="order_id" ref="demo_order_2" />
+        <field name="part_id" ref="demo_part_2" />
         <field name="quantity">1</field>
-        <field name="price">300</field>
+        <field name="price">3200</field>
     </record>
     <record id="demo_order_line_3" model="fixit.order.line">
         <field name="name">Ordering feed roller from supplier</field>
@@ -217,12 +240,14 @@
     <record id="demo_order_line_4" model="fixit.order.line">
         <field name="name">Screen replacement (quote sent)</field>
         <field name="order_id" ref="demo_order_4" />
+        <field name="part_id" ref="demo_part_5" />
         <field name="quantity">1</field>
         <field name="price">4500</field>
     </record>
     <record id="demo_order_line_5" model="fixit.order.line">
         <field name="name">Power board replacement</field>
         <field name="order_id" ref="demo_order_5" />
+        <field name="part_id" ref="demo_part_6" />
         <field name="quantity">1</field>
         <field name="price">1800</field>
     </record>
@@ -235,6 +260,7 @@
     <record id="demo_order_line_7" model="fixit.order.line">
         <field name="name">Descaling and pump replacement</field>
         <field name="order_id" ref="demo_order_6" />
+        <field name="part_id" ref="demo_part_7" />
         <field name="quantity">1</field>
         <field name="price">1200</field>
     </record>
@@ -246,8 +272,9 @@
         <field name="price">850</field>
     </record>
     <record id="demo_order_line_9" model="fixit.order.line">
-        <field name="name">Diagnostics (client declined repair)</field>
+        <field name="name">HDMI port replacement (client declined)</field>
         <field name="order_id" ref="demo_order_8" />
+        <field name="part_id" ref="demo_part_8" />
         <field name="quantity">1</field>
         <field name="price">300</field>
     </record>
