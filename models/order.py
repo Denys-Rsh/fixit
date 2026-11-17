@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 # Where an order can go from each state. Picked Up and Cancelled are final.
@@ -35,6 +35,12 @@ class Order(models.Model):
     device_id = fields.Many2one(comodel_name='fixit.device', string='Device')
     repairman_id = fields.Many2one(comodel_name='res.users', string='Repairman')
     line_ids = fields.One2many(comodel_name='fixit.order.line', inverse_name='order_id', string='Works')
+    amount_total = fields.Float(string='Total', compute='_compute_amount_total')
+
+    @api.depends('line_ids.subtotal')
+    def _compute_amount_total(self):
+        for order in self:
+            order.amount_total = sum(order.line_ids.mapped('subtotal'))
 
     def _set_state(self, new_state):
         """Change the state only if NEXT_STATES allows it."""

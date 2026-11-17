@@ -1,7 +1,10 @@
 from datetime import date
 
+from psycopg2 import IntegrityError
+
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import TransactionCase, new_test_user, tagged
+from odoo.tools import mute_logger
 
 
 @tagged('post_install', '-at_install')
@@ -59,6 +62,23 @@ class TestFixit(TransactionCase):
             'line_ids': [(0, 0, {'name': 'Battery', 'quantity': 2, 'price': 500})],
         })
         self.assertEqual(order.line_ids.subtotal, 1000)
+
+    def test_order_total(self):
+        """Order total is the sum of line subtotals."""
+        order = self.env['fixit.order'].create({
+            'name': 'Phone',
+            'line_ids': [
+                (0, 0, {'name': 'Battery', 'quantity': 2, 'price': 500}),
+                (0, 0, {'name': 'Screen', 'quantity': 1, 'price': 1500}),
+            ],
+        })
+        self.assertEqual(order.amount_total, 2500)
+
+    def test_order_line_quantity(self):
+        """Quantity must be greater than zero."""
+        order = self.env['fixit.order'].create({'name': 'Phone'})
+        with self.assertRaises(IntegrityError), mute_logger('odoo.sql_db'):
+            self.env['fixit.order.line'].create({'name': 'Battery', 'quantity': 0, 'order_id': order.id})
 
     def test_order_line_access(self):
         """Portal user cannot read order lines."""

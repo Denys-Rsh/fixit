@@ -14,9 +14,13 @@ class OrderLine(models.Model):
     price = fields.Float(string='Price')
     subtotal = fields.Float(string='Subtotal', compute='_compute_subtotal')
 
+    _check_quantity = models.Constraint('CHECK(quantity > 0)', 'Quantity must be positive.')
+
     @api.onchange('part_id')
     def _onchange_part_id(self):
         self.price = self.part_id.price
+        if not self.name:
+            self.name = self.part_id.name
 
     @api.depends('quantity', 'price')
     def _compute_subtotal(self):

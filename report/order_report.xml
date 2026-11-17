@@ -60,6 +60,12 @@
                                     <td class="text-end"><span t-field="line.subtotal" /></td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-end"><strong>Total</strong></td>
+                                    <td class="text-end"><strong><span t-field="o.amount_total" /></strong></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </t>

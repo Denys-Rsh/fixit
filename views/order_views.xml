@@ -45,7 +45,7 @@
                         <field name="device_id" />
                         <field name="repairman_id" />
                     </group>
-                    <field name="line_ids">
+                    <field name="line_ids" readonly="state in ('picked_up', 'cancelled')">
                         <list editable="bottom">
                             <field name="name" />
                             <field name="part_id" />
@@ -54,6 +54,9 @@
                             <field name="subtotal" />
                         </list>
                     </field>
+                    <group class="oe_subtotal_footer">
+                        <field name="amount_total" />
+                    </group>
                 </sheet>
             </form>
         </field>
