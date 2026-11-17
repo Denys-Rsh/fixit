@@ -21,16 +21,21 @@ class Order(models.Model):
     _description = 'Order of Fixit'
 
     name = fields.Char(string='Name', required=True)
-    state = fields.Selection([
-        ('new_request', 'New Request'),
-        ('diagnostics', 'Diagnostics'),
-        ('customer_approval', 'Customer Approval'),
-        ('awaiting', 'Awaiting Parts'),
-        ('in_repair', 'In Repair'),
-        ('ready', 'Ready'),
-        ('picked_up', 'Picked Up'),
-        ('cancelled', 'Cancelled'),
-    ], string='Status', default='new_request', readonly=True)
+    state = fields.Selection(
+        [
+            ('new_request', 'New Request'),
+            ('diagnostics', 'Diagnostics'),
+            ('customer_approval', 'Customer Approval'),
+            ('awaiting', 'Awaiting Parts'),
+            ('in_repair', 'In Repair'),
+            ('ready', 'Ready'),
+            ('picked_up', 'Picked Up'),
+            ('cancelled', 'Cancelled'),
+        ],
+        string='Status',
+        default='new_request',
+        readonly=True,
+    )
     client_id = fields.Many2one(comodel_name='res.partner', string='Client')
     device_id = fields.Many2one(comodel_name='fixit.device', string='Device')
     repairman_id = fields.Many2one(comodel_name='res.users', string='Repairman')

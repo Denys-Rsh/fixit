@@ -67,21 +67,25 @@ class TestFixit(TransactionCase):
 
     def test_order_line_subtotal(self):
         """Subtotal is quantity * price."""
-        order = self.env['fixit.order'].create({
-            'name': 'Phone',
-            'line_ids': [(0, 0, {'name': 'Battery', 'quantity': 2, 'price': 500})],
-        })
+        order = self.env['fixit.order'].create(
+            {
+                'name': 'Phone',
+                'line_ids': [(0, 0, {'name': 'Battery', 'quantity': 2, 'price': 500})],
+            }
+        )
         self.assertEqual(order.line_ids.subtotal, 1000)
 
     def test_order_total(self):
         """Order total is the sum of line subtotals."""
-        order = self.env['fixit.order'].create({
-            'name': 'Phone',
-            'line_ids': [
-                (0, 0, {'name': 'Battery', 'quantity': 2, 'price': 500}),
-                (0, 0, {'name': 'Screen', 'quantity': 1, 'price': 1500}),
-            ],
-        })
+        order = self.env['fixit.order'].create(
+            {
+                'name': 'Phone',
+                'line_ids': [
+                    (0, 0, {'name': 'Battery', 'quantity': 2, 'price': 500}),
+                    (0, 0, {'name': 'Screen', 'quantity': 1, 'price': 1500}),
+                ],
+            }
+        )
         self.assertEqual(order.amount_total, 2500)
 
     def test_order_line_quantity(self):
@@ -93,10 +97,16 @@ class TestFixit(TransactionCase):
 
     def test_order_line_access(self):
         """Portal user cannot read order lines."""
-        order = self.env['fixit.order'].with_user(self.user).create({
-            'name': 'Laptop',
-            'line_ids': [(0, 0, {'name': 'Change screen'})],
-        })
+        order = (
+            self.env['fixit.order']
+            .with_user(self.user)
+            .create(
+                {
+                    'name': 'Laptop',
+                    'line_ids': [(0, 0, {'name': 'Change screen'})],
+                }
+            )
+        )
         self.assertEqual(order.line_ids.order_id, order)
 
         with self.assertRaises(AccessError) as error:
@@ -141,10 +151,12 @@ class TestFixit(TransactionCase):
 
     def test_user_sees_less_orders_than_admin(self):
         """Record rules hide other repairmen orders and lines from a user."""
-        self.env['fixit.order'].create([
-            {'name': 'Mine', 'repairman_id': self.repairman.id, 'line_ids': [(0, 0, {'name': 'Line 1'})]},
-            {'name': 'Not mine', 'repairman_id': self.user.id, 'line_ids': [(0, 0, {'name': 'Line 2'})]},
-        ])
+        self.env['fixit.order'].create(
+            [
+                {'name': 'Mine', 'repairman_id': self.repairman.id, 'line_ids': [(0, 0, {'name': 'Line 1'})]},
+                {'name': 'Not mine', 'repairman_id': self.user.id, 'line_ids': [(0, 0, {'name': 'Line 2'})]},
+            ]
+        )
         Order = self.env['fixit.order']
         Line = self.env['fixit.order.line']
 
@@ -164,9 +176,14 @@ class TestFixit(TransactionCase):
         other_order = self.env['fixit.order'].create({'name': 'Order 3'})
 
         # Orders selected in the list come to the wizard through active_ids
-        wizard = self.env['fixit.mass.reassign.repairman.wizard'].with_user(self.user).with_context(
-            active_ids=orders.ids,
-        ).create({'repairman_id': self.repairman.id})
+        wizard = (
+            self.env['fixit.mass.reassign.repairman.wizard']
+            .with_user(self.user)
+            .with_context(
+                active_ids=orders.ids,
+            )
+            .create({'repairman_id': self.repairman.id})
+        )
         self.assertEqual(wizard.order_ids, orders)
 
         wizard.action_reassign()
@@ -179,20 +196,24 @@ class TestFixit(TransactionCase):
 
     def test_report_wizard_wrong_period(self):
         """Period start after period end raises an error."""
-        wizard = self.env['fixit.order.report.wizard'].create({
-            'date_from': date(2026, 2, 1),
-            'date_to': date(2026, 1, 1),
-        })
+        wizard = self.env['fixit.order.report.wizard'].create(
+            {
+                'date_from': date(2026, 2, 1),
+                'date_to': date(2026, 1, 1),
+            }
+        )
         with self.assertRaises(UserError) as error:
             wizard.action_show_report()
         self.assertEqual(str(error.exception), 'The period start cannot be later than the period end.')
 
     def test_report_wizard_no_orders(self):
         """Empty search result raises an error."""
-        wizard = self.env['fixit.order.report.wizard'].create({
-            'date_from': date(2000, 1, 1),
-            'date_to': date(2000, 1, 31),
-        })
+        wizard = self.env['fixit.order.report.wizard'].create(
+            {
+                'date_from': date(2000, 1, 1),
+                'date_to': date(2000, 1, 31),
+            }
+        )
         with self.assertRaises(UserError) as error:
             wizard.action_show_report()
         self.assertEqual(str(error.exception), 'No orders found for these filters.')
@@ -203,11 +224,15 @@ class TestFixit(TransactionCase):
         self.env['fixit.order'].create({'name': 'Not mine', 'repairman_id': self.user.id})
 
         # Repairmen selected in the users list become the wizard default
-        wizard = self.env['fixit.order.report.wizard'].with_context(
-            active_model='res.users',
-            active_ids=self.repairman.ids,
-            discard_logo_check=True,
-        ).create({})
+        wizard = (
+            self.env['fixit.order.report.wizard']
+            .with_context(
+                active_model='res.users',
+                active_ids=self.repairman.ids,
+                discard_logo_check=True,
+            )
+            .create({})
+        )
         self.assertEqual(wizard.repairman_ids, self.repairman)
         self.assertFalse(wizard.order_ids)
 
